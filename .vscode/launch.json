@@ -4,14 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
-            "name": "Python: waitress",
+            "name": "Python: Run gunicorn",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/venv/Lib/site-packages/waitress",
+            "program": "venv/bin/gunicorn",
             "console": "integratedTerminal",
-            "args": ["--listen*:8000", "demo.wsgi:application" ]
+            "args": ["--access-logfile", "logs.log", "demo.wsgi", "--workers", "1"]
         }
     ]
 }

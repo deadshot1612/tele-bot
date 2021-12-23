@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 17:23+0500\n"
+"POT-Creation-Date: 2021-12-23 11:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,45 +20,54 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\messaging.py:9
+#: keyboards.py:15
+msgid "Share your phone number"
+msgstr "Отправить номер телефона"
+
+#: messaging.py:9
 msgid "Choose language"
 msgstr "Выберите язык"
 
-#: .\messaging.py:15
+#: messaging.py:15
 msgid "Enter your full name"
 msgstr "Введите полное имя"
 
-#: .\messaging.py:20
+#: messaging.py:20
 msgid "Hi! Nice to meet you again!"
-msgstr "Привет! Рад видет вас снова!"
+msgstr "Привет! Рад вас снова видет!"
 
-#: .\messaging.py:24
-msgid "Please enter your phone number "
-msgstr "Введите номер телефона"
+#: messaging.py:25
+msgid "Please enter your phone number: "
+msgstr "Отправьте номер телефона"
 
-#: .\models.py:8 .\models.py:15
+#: messaging.py:30
+msgid "Dear"
+msgstr "Уважаемий"
+
+#: messaging.py:31
+msgid "Thanks for registration"
+msgstr "Спасибо за регистрацию"
+
+#: models.py:8 models.py:15
 msgid "Russian"
 msgstr "Русский"
 
-#: .\models.py:9 .\models.py:16
+#: models.py:9 models.py:16
 msgid "English"
 msgstr "Английский"
 
-#: .\models.py:10 .\models.py:17
+#: models.py:10 models.py:17
 msgid "Uzbek"
 msgstr "Узбекский"
 
-#: .\models.py:21
+#: models.py:21
 msgid "ID"
 msgstr "ID"
 
-#: .\models.py:23
+#: models.py:23
 msgid "Full Name"
-msgstr "Полная имя"
+msgstr "Имя-Фамилия"
 
-#: .\models.py:24
+#: models.py:24
 msgid "Phone Number"
 msgstr "Номер телефона"
-
-#~ msgid "Hello"
-#~ msgstr "Привет"

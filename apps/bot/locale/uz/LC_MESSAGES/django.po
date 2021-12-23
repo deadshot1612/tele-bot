@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 17:23+0500\n"
+"POT-Creation-Date: 2021-12-23 11:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,42 +18,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\messaging.py:9
+#: keyboards.py:15
+msgid "Share your phone number"
+msgstr "Telefon raqamni jo'natish"
+
+#: messaging.py:9
 msgid "Choose language"
 msgstr "Tilni tanlang"
 
-#: .\messaging.py:15
+#: messaging.py:15
 msgid "Enter your full name"
-msgstr "Ism Familiyangizni kiriting"
+msgstr "Ism-Familiyangizni kiriting"
 
-#: .\messaging.py:20
+#: messaging.py:20
 msgid "Hi! Nice to meet you again!"
-msgstr "Salom, Sizni qayta ko'rishdan xursandman!"
+msgstr "Assalomu alaykum, Sizni qayta ko'rishdan xursandman"
 
-#: .\messaging.py:24
+#: messaging.py:25
 msgid "Please enter your phone number: "
-msgstr "Telefon raqamingizni kiriting"
+msgstr "Iltimos, Telefon raqamingizni kiriting"
 
-#: .\models.py:8 .\models.py:15
+#: messaging.py:30
+msgid "Dear"
+msgstr "Qadrli"
+
+#: messaging.py:31
+msgid "Thanks for registration"
+msgstr "Ro'yxatdan o'tganingiz uchun rahmat"
+
+#: models.py:8 models.py:15
 msgid "Russian"
-msgstr "Ruscha"
+msgstr "Rus Tili"
 
-#: .\models.py:9 .\models.py:16
+#: models.py:9 models.py:16
 msgid "English"
-msgstr "Inglizcha"
+msgstr "Ingiliz Tili"
 
-#: .\models.py:10 .\models.py:17
+#: models.py:10 models.py:17
 msgid "Uzbek"
-msgstr "O'zbekcha"
+msgstr "O'zbek Tili"
 
-#: .\models.py:21
+#: models.py:21
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
-#: .\models.py:23
+#: models.py:23
 msgid "Full Name"
-msgstr "To'liq Ism Sha'rif"
+msgstr ""
 
-#: .\models.py:24
+#: models.py:24
 msgid "Phone Number"
 msgstr ""

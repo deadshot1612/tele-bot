@@ -44,12 +44,14 @@ def on_language_specified(message):
 def on_full_name_specified(message):
     
     full_name= str(message.text)
-    BotUser.objects.update_or_create(id=message.from_user.id, full_name = full_name)
+    BotUser.objects.update(id=message.from_user.id, full_name = full_name)
     messaging.request_number(message)
     bot.register_next_step_handler(message, on_number_specified)
 
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['contact'])
 @with_locale
 def on_number_specified(message):
-    pass
+    phone_number = message.contact.phone_number
+    BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
+    messaging.congrat(message)
