@@ -1,13 +1,12 @@
 from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.translation import gettext_lazy as _
 from telebot import types
 
 from apps.bot import bot
 from apps.bot.utils import change_locale, with_locale
 from apps.bot.models import BotUser
 from apps.bot import messaging
-
-# Create your views here.
 
 
 @csrf_exempt
@@ -24,12 +23,13 @@ def on_start(message: types.Message):
     user_id = message.from_user.id
     if BotUser.objects.filter(id=user_id).exists():
         messaging.send_hello(message)
+        bot.register_next_step_handler(message, on_command_specified)
     else:
         messaging.request_language(message)
         bot.register_next_step_handler(message, on_language_specified)
 
 
-@bot.message_handler(content_types=['text'])
+
 @with_locale
 def on_language_specified(message):
     locale = BotUser.Locale.get_from_value(message.text)
@@ -39,7 +39,7 @@ def on_language_specified(message):
         bot.register_next_step_handler(message, on_full_name_specified)
 
 
-@bot.message_handler(content_types=['text'])
+
 @with_locale
 def on_full_name_specified(message):
     
@@ -49,9 +49,65 @@ def on_full_name_specified(message):
     bot.register_next_step_handler(message, on_number_specified)
 
 
-@bot.message_handler(content_types=['contact'])
+
 @with_locale
 def on_number_specified(message):
-    phone_number = message.contact.phone_number
+    if message.contact is not None:
+        phone_number = message.contact.phone_number
+    else:
+        phone_number = message.text
     BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
     messaging.congrat(message)
+    bot.register_next_step_handler(message, on_command_specified)
+
+
+@with_locale
+def on_command_specified(message: types.Message):
+    if message.text == str(_("Settings")):
+        messaging.settings(message)
+        bot.register_next_step_handler(message, on_changes_specified)
+    if message.text ==str(_("Add ad")):
+        messaging.add_ad(message)
+
+
+@bot.message_handler(content_types=['text'])
+@with_locale
+def on_changes_specified(message: types.Message):
+    if message.text == str(_("Change language")):
+        messaging.request_language(message)
+        bot.register_next_step_handler(message, on_language_change_specified)
+    elif message.text == str(_("Change Name")):
+        messaging.change_name(message)
+        bot.register_next_step_handler(message, on_name_change_specified)
+    elif message.text == str(_("Change Phone Number")):
+        messaging.request_number(message)
+        bot.register_next_step_handler(message, on_number_change_specified)
+    elif message.text == str(_("Back")):
+        pass
+
+
+@with_locale
+def on_name_change_specified(message: types.Message):
+
+        full_name = str(message.text)
+        BotUser.objects.update(id=message.from_user.id, full_name = full_name)
+        messaging.send_new_status(message)
+        bot.register_next_step_handler(message, on_changes_specified)
+
+
+@with_locale
+def on_language_change_specified(message: types.Message):
+        locale = BotUser.Locale.get_from_value(message.text)
+        BotUser.objects.update(id=message.from_user.id, locale = locale)
+        messaging.send_new_status(message)
+        bot.register_next_step_handler(message, on_changes_specified)
+
+@with_locale
+def on_number_change_specified(message):
+    if message.contact is not None:
+        phone_number = message.contact.phone_number
+    else:
+        phone_number = message.text
+    BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
+    messaging.send_new_status(message)
+    bot.register_next_step_handler(message, on_changes_specified)
