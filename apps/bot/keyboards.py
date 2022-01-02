@@ -50,5 +50,14 @@ def back():
 
     return keyboard
 
+def change_contact_number():
+    keyboard = types.ReplyKeyboardMarkup()
+    text=_("Share your phone number")
+    reg_button = types.KeyboardButton(text=str(text), request_contact=True)
+    text=_("Back")
+    button = types.KeyboardButton(text=str(text))
+    keyboard.add(reg_button, button)
+    
+    return keyboard
 def remove_keyboard():
     return types.ReplyKeyboardRemove()

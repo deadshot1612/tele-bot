@@ -65,3 +65,14 @@ def send_new_status(message: types.Message):
     
     keyboard = keyboards.setting_keyboard()
     bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)
+
+def back (message: types.Message):
+    text = str(_("Return to Homepage"))
+    keyboard = keyboards.user_keyboard()
+    bot.send_message(chat_id =message.from_user.id ,text = text, reply_markup = keyboard)
+
+
+def change_number(message):
+    keyboard = keyboards.change_contact_number()
+    text = _('Send your new number')
+    bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)

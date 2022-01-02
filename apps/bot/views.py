@@ -70,7 +70,7 @@ def on_command_specified(message: types.Message):
         messaging.add_ad(message)
 
 
-@bot.message_handler(content_types=['text'])
+
 @with_locale
 def on_changes_specified(message: types.Message):
     if message.text == str(_("Change language")):
@@ -80,15 +80,19 @@ def on_changes_specified(message: types.Message):
         messaging.change_name(message)
         bot.register_next_step_handler(message, on_name_change_specified)
     elif message.text == str(_("Change Phone Number")):
-        messaging.request_number(message)
+        messaging.change_number(message)
         bot.register_next_step_handler(message, on_number_change_specified)
     elif message.text == str(_("Back")):
-        pass
+        messaging.back(message)
+        bot.register_next_step_handler(message, on_command_specified)
 
 
 @with_locale
 def on_name_change_specified(message: types.Message):
-
+    if message.text == str(_("Back")):
+        messaging.back(message)
+        bot.register_next_step_handler(message, on_command_specified)
+    else:
         full_name = str(message.text)
         BotUser.objects.update(id=message.from_user.id, full_name = full_name)
         messaging.send_new_status(message)
@@ -104,10 +108,14 @@ def on_language_change_specified(message: types.Message):
 
 @with_locale
 def on_number_change_specified(message):
-    if message.contact is not None:
-        phone_number = message.contact.phone_number
+    if message.text == str(_("Back")):
+        messaging.back(message)
+        bot.register_next_step_handler(message, on_command_specified)
     else:
-        phone_number = message.text
-    BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
-    messaging.send_new_status(message)
-    bot.register_next_step_handler(message, on_changes_specified)
+        if message.contact is not None:
+            phone_number = message.contact.phone_number
+        else:
+            phone_number = message.text
+        BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
+        messaging.send_new_status(message)
+        bot.register_next_step_handler(message, on_changes_specified)
