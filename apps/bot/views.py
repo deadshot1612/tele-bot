@@ -28,8 +28,6 @@ def on_start(message: types.Message):
         messaging.request_language(message)
         bot.register_next_step_handler(message, on_language_specified)
 
-
-
 @with_locale
 def on_language_specified(message):
     locale = BotUser.Locale.get_from_value(message.text)
@@ -38,8 +36,6 @@ def on_language_specified(message):
         messaging.request_full_name(message)
         bot.register_next_step_handler(message, on_full_name_specified)
 
-
-
 @with_locale
 def on_full_name_specified(message):
     
@@ -47,8 +43,6 @@ def on_full_name_specified(message):
     BotUser.objects.update(id=message.from_user.id, full_name = full_name)
     messaging.request_number(message)
     bot.register_next_step_handler(message, on_number_specified)
-
-
 
 @with_locale
 def on_number_specified(message):
@@ -60,16 +54,13 @@ def on_number_specified(message):
     messaging.congrat(message)
     bot.register_next_step_handler(message, on_command_specified)
 
-
 @with_locale
 def on_command_specified(message: types.Message):
     if message.text == str(_("Settings")):
         messaging.settings(message)
         bot.register_next_step_handler(message, on_changes_specified)
-    if message.text ==str(_("Add ad")):
-        messaging.add_ad(message)
-
-
+    if message.text ==str(_("Menu")):
+        messaging.get_menu(message)
 
 @with_locale
 def on_changes_specified(message: types.Message):
@@ -86,7 +77,6 @@ def on_changes_specified(message: types.Message):
         messaging.back(message)
         bot.register_next_step_handler(message, on_command_specified)
 
-
 @with_locale
 def on_name_change_specified(message: types.Message):
     if message.text == str(_("Back")):
@@ -97,7 +87,6 @@ def on_name_change_specified(message: types.Message):
         BotUser.objects.update(id=message.from_user.id, full_name = full_name)
         messaging.send_new_status(message)
         bot.register_next_step_handler(message, on_changes_specified)
-
 
 @with_locale
 def on_language_change_specified(message: types.Message):

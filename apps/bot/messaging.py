@@ -1,5 +1,6 @@
 from telebot import types
 from django.utils.translation import gettext_lazy as _
+import telebot
 
 from apps.bot import bot
 from apps.bot import keyboards
@@ -20,10 +21,7 @@ def request_full_name(message):
 def send_hello(message):
     user = BotUser.objects.filter(id=message.from_user.id).first()
     text = _('Hi! Nice to meet you again!')
-    if user.is_admin:
-        keyboard = keyboards.admin_keyboard()
-    else:
-        keyboard = keyboards.user_keyboard()
+    keyboard = keyboards.user_keyboard()
     bot.send_message(message.from_user.id, text=str(text),reply_markup=keyboard)
 
 def request_number(message):
@@ -41,6 +39,13 @@ def congrat(message):
     else:
         keyboard = keyboards.user_keyboard()
     bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)
+
+def get_menu(message: types.Message):    
+    
+    text = str(_("What do you want to eat"))
+    keyboard = keyboards.get_menu_keyboard()
+    bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)
+
 
 def settings(message:types.Message):
 
