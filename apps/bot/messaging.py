@@ -34,10 +34,7 @@ def congrat(message):
     text1 = _("Dear")
     text2 = _("Thanks for registration")
     text = f"{text1} {user.full_name}, {text2}"
-    if user.is_admin:
-        keyboard = keyboards.admin_keyboard()
-    else:
-        keyboard = keyboards.user_keyboard()
+    keyboard = keyboards.user_keyboard()
     bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)
 
 def get_menu(message: types.Message):    
@@ -47,6 +44,12 @@ def get_menu(message: types.Message):
     bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)
 
 
+def get_category_menu(message: types.Message,cat):    
+    
+    text = str(_("Choice food what do you want to eat"))
+    keyboard = keyboards.get_product_menu_keyboard(cat)
+    bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)
+    
 def settings(message:types.Message):
 
     text = _("Please choice settings")
@@ -81,3 +84,4 @@ def change_number(message):
     keyboard = keyboards.change_contact_number()
     text = _('Send your new number')
     bot.send_message(message.from_user.id, text=str(text), reply_markup=keyboard)
+

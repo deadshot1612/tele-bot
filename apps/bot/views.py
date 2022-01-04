@@ -7,6 +7,7 @@ from apps.bot import bot
 from apps.bot.utils import change_locale, with_locale
 from apps.bot.models import BotUser
 from apps.bot import messaging
+from apps.product.views import all_categories,get_product_from_category
 
 
 @csrf_exempt
@@ -61,7 +62,8 @@ def on_command_specified(message: types.Message):
         bot.register_next_step_handler(message, on_changes_specified)
     if message.text ==str(_("Menu")):
         messaging.get_menu(message)
-
+        bot.register_next_step_handler(message, on_order_specified)
+        
 @with_locale
 def on_changes_specified(message: types.Message):
     if message.text == str(_("Change language")):
@@ -108,3 +110,13 @@ def on_number_change_specified(message):
         BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
         messaging.send_new_status(message)
         bot.register_next_step_handler(message, on_changes_specified)
+
+@with_locale
+def on_order_specified(message: types.Message):
+    if message.text == str(_("Back")):
+            messaging.back(message)
+            bot.register_next_step_handler(message, on_command_specified)
+    categories = all_categories()
+    for cat in categories:
+        if message.text == cat.name:
+            messaging.get_category_menu(message,cat)

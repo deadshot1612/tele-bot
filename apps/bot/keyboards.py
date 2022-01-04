@@ -2,12 +2,24 @@ from telebot import types
 from django.utils.translation import gettext_lazy as _
 
 from apps.bot.models import BotUser
-from apps.product.views import all_categories
+from apps.product.views import all_categories, get_product_from_category
 def get_menu_keyboard():
-    keyboard = types.ReplyKeyboardMarkup()
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard = True)
+    button = types.KeyboardButton(text= str(_("Back")))
     categories = all_categories()
     for cat in categories:
-        keyboard.add(types.KeyboardButton(text=str(cat)))
+        keyboard.add(types.KeyboardButton(text=str(cat.name)))
+    keyboard.add(button)
+    return keyboard
+
+
+def get_product_menu_keyboard(cat):
+    keyboard = types.ReplyKeyboardMarkup()
+    button = types.KeyboardButton(text= str(_("Back")))
+    products = get_product_from_category(cat)
+    for p in products:
+        keyboard.add(types.KeyboardButton(text=str(p.name)))
+    keyboard.add(button)
     return keyboard
 
 def get_choose_language_keyboard():
@@ -23,14 +35,7 @@ def share_contact_number():
     keyboard.add(reg_button)
     
     return keyboard
-def admin_keyboard():
-    keyboard = types.ReplyKeyboardMarkup()
-    text=_("Add ad")
-    button1 = types.KeyboardButton(text=str(text))
-    button2 = types.KeyboardButton(text = str(_("Settings")))
-    keyboard.add(button1,button2)
 
-    return keyboard
 
 def user_keyboard():
     keyboard = types.ReplyKeyboardMarkup()
