@@ -7,3 +7,4 @@ def get_translation(string, locale):
     val = _(string)
     translation.deactivate()
     return val
+

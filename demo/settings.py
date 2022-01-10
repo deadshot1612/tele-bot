@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -117,6 +118,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+
 USE_L10N = True
 
 USE_TZ = True
@@ -126,6 +128,15 @@ LANGUAGES = (
     ('en', _('English')),
     ('uz', _('Uzbek'))
 )
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+
+MODELTRANSLATION_TRANSLATION_FILES = (
+    'apps.bot.translation',
+    'apps.product.translation',
+)
+
+MODELTRANSLATION_TRANSLATION_REGISTRY = 'demo.translation'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -144,3 +155,5 @@ SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
 
 STATIC_ROOT = BASE_DIR/'static'
 STATIC_URL = '/static/'
+
+USE_I18N = True

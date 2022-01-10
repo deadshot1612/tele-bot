@@ -7,8 +7,7 @@ from apps.bot import bot
 from apps.bot.utils import change_locale, with_locale
 from apps.bot.models import BotUser
 from apps.bot import messaging
-from apps.product.views import all_categories,get_product_from_category
-
+from apps.product.models import Category, Product
 
 @csrf_exempt
 def handle(request):
@@ -41,7 +40,7 @@ def on_language_specified(message):
 def on_full_name_specified(message):
     
     full_name= str(message.text)
-    BotUser.objects.update(id=message.from_user.id, full_name = full_name)
+    BotUser.objects.filter(id=message.from_user.id).update(full_name = full_name)
     messaging.request_number(message)
     bot.register_next_step_handler(message, on_number_specified)
 
@@ -51,7 +50,7 @@ def on_number_specified(message):
         phone_number = message.contact.phone_number
     else:
         phone_number = message.text
-    BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
+    BotUser.objects.filter(id=message.from_user.id).update(phone_number = phone_number)
     messaging.congrat(message)
     bot.register_next_step_handler(message, on_command_specified)
 
@@ -63,6 +62,8 @@ def on_command_specified(message: types.Message):
     if message.text ==str(_("Menu")):
         messaging.get_menu(message)
         bot.register_next_step_handler(message, on_order_specified)
+    else:
+        bot.register_next_step_handler(message, on_command_specified)
         
 @with_locale
 def on_changes_specified(message: types.Message):
@@ -86,14 +87,14 @@ def on_name_change_specified(message: types.Message):
         bot.register_next_step_handler(message, on_command_specified)
     else:
         full_name = str(message.text)
-        BotUser.objects.update(id=message.from_user.id, full_name = full_name)
+        BotUser.objects.filter(id=message.from_user.id).update(full_name = full_name)
         messaging.send_new_status(message)
         bot.register_next_step_handler(message, on_changes_specified)
 
 @with_locale
 def on_language_change_specified(message: types.Message):
         locale = BotUser.Locale.get_from_value(message.text)
-        BotUser.objects.update(id=message.from_user.id, locale = locale)
+        BotUser.objects.filter(id=message.from_user.id).update(locale = locale)
         messaging.send_new_status(message)
         bot.register_next_step_handler(message, on_changes_specified)
 
@@ -107,7 +108,7 @@ def on_number_change_specified(message):
             phone_number = message.contact.phone_number
         else:
             phone_number = message.text
-        BotUser.objects.update(id=message.from_user.id, phone_number = phone_number)
+        BotUser.objects.filter(id=message.from_user.id).update(phone_number = phone_number)
         messaging.send_new_status(message)
         bot.register_next_step_handler(message, on_changes_specified)
 
@@ -116,7 +117,28 @@ def on_order_specified(message: types.Message):
     if message.text == str(_("Back")):
             messaging.back(message)
             bot.register_next_step_handler(message, on_command_specified)
-    categories = all_categories()
+    categories = Category.objects.all()
     for cat in categories:
         if message.text == cat.name:
             messaging.get_category_menu(message,cat)
+            bot.register_next_step_handler(message, choise_product,cat)
+
+@with_locale
+def choise_product(message,cat):
+    product = Product.objects.filter(name = str(message.text)).first()
+    if message.text == str(_('Back')):
+        messaging.get_category(message)
+        bot.register_next_step_handler(message, on_order_specified)
+    if product is not None:
+        messaging.show_product(message,product)
+        bot.register_next_step_handler(message, detail_product,cat)
+    else:
+        bot.register_next_step_handler(message, choise_product,cat)
+
+@with_locale
+def detail_product(message,cat):
+    if message.text == str(_('Back')):
+        messaging.get_product(message,cat)
+        bot.register_next_step_handler(message, choise_product,cat)
+    else:
+        print("Here")

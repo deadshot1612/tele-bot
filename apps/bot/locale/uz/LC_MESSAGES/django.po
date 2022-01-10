@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 11:36+0000\n"
+"POT-Creation-Date: 2022-01-08 11:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,33 +18,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: keyboards.py:15
+#: keyboards.py:8 keyboards.py:18 keyboards.py:53 keyboards.py:60
+#: keyboards.py:69 views.py:80 views.py:86 views.py:104 views.py:118
+msgid "Back"
+msgstr "◀️Ortga"
+
+#: keyboards.py:33 keyboards.py:67
 msgid "Share your phone number"
 msgstr "Telefon raqamni jo'natish"
 
-#: messaging.py:9
+#: keyboards.py:42 views.py:60
+msgid "Settings"
+msgstr "⚙️Sozlamalar"
+
+#: keyboards.py:43 views.py:63
+msgid "Menu"
+msgstr "Menyu"
+
+#: keyboards.py:50 views.py:71
+#, fuzzy
+#| msgid "Choose language"
+msgid "Change language"
+msgstr "Tilni tanlang"
+
+#: keyboards.py:51 views.py:74
+msgid "Change Name"
+msgstr "Ismini almashtirish"
+
+#: keyboards.py:52 views.py:77
+#, fuzzy
+#| msgid "Share your phone number"
+msgid "Change Phone Number"
+msgstr "Telefon raqamni jo'natish"
+
+#: messaging.py:11
 msgid "Choose language"
 msgstr "Tilni tanlang"
 
-#: messaging.py:15
+#: messaging.py:17
 msgid "Enter your full name"
 msgstr "Ism-Familiyangizni kiriting"
 
-#: messaging.py:20
+#: messaging.py:23
 msgid "Hi! Nice to meet you again!"
 msgstr "Assalomu alaykum, Sizni qayta ko'rishdan xursandman"
 
-#: messaging.py:25
+#: messaging.py:29
 msgid "Please enter your phone number: "
 msgstr "Iltimos, Telefon raqamingizni kiriting"
 
-#: messaging.py:30
+#: messaging.py:34
 msgid "Dear"
 msgstr "Qadrli"
 
-#: messaging.py:31
+#: messaging.py:35
 msgid "Thanks for registration"
 msgstr "Ro'yxatdan o'tganingiz uchun rahmat"
+
+#: messaging.py:42
+msgid "What do you want to eat"
+msgstr "Tanlang"
+
+#: messaging.py:49
+msgid "Choice food what do you want to eat"
+msgstr "Ovqat tanlang"
+
+#: messaging.py:55
+msgid "Please choice settings"
+msgstr "⚙️Sozlamalar"
+
+#: messaging.py:61
+#, fuzzy
+#| msgid "Enter your full name"
+msgid "Input your new name"
+msgstr "Ism-Familiyangizni kiriting"
+
+#: messaging.py:68 models.py:23
+msgid "Full Name"
+msgstr "Ism Sh'rif"
+
+#: messaging.py:69
+#, fuzzy
+#| msgid "Choose language"
+msgid "Language"
+msgstr "Tilni tanlang"
+
+#: messaging.py:70 models.py:24
+msgid "Phone Number"
+msgstr "Telefon raqam"
+
+#: messaging.py:78
+msgid "Return to Homepage"
+msgstr "Bosh sahif"
+
+#: messaging.py:85
+#, fuzzy
+#| msgid "Share your phone number"
+msgid "Send your new number"
+msgstr "Telefon raqamni jo'natish"
 
 #: models.py:8 models.py:15
 msgid "Russian"
@@ -60,12 +131,4 @@ msgstr "O'zbek Tili"
 
 #: models.py:21
 msgid "ID"
-msgstr ""
-
-#: models.py:23
-msgid "Full Name"
-msgstr ""
-
-#: models.py:24
-msgid "Phone Number"
-msgstr ""
+msgstr "ID"
